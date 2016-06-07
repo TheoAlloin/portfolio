@@ -599,7 +599,7 @@ function add_new_cv_field(){
     }
 	?>
     <div class="wrap">
-    	<h2>Ajoutez un contenu a votre cv !</h2>
+    	<h2>Ajoutez du contenu a votre cv !</h2>
     </div>
     <div class="wrap">
 	    <form action="" method="post">

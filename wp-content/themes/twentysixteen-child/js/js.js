@@ -6,6 +6,10 @@
          })
       }, 3500);
       
+      var contenu = 'coucou';
+      setInterval(function(){
+      	$("#self-def").text(contenu);
+      }, 3500);
      /*********************Contact form **************************/
     
     $('#contact_form').bootstrapValidator({

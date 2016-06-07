@@ -22,7 +22,21 @@
 	display: none;
 }
 
+.row.no-gutter.popup-gallery{
+	background-color: #f05f40;
+}
+.glyphon-default {
+	top : 1px !important;
+}
+
+.no-decoration:active, .no-decoration:after, .no-decoration:hover{
+	text-decoration: none;
+}
 /************************************************* Timeline ******************************************/
+.add_me:hover{
+	color: #F05F40;
+}
+
 .timeline_glyph {
     top: 15px!important;
 }
