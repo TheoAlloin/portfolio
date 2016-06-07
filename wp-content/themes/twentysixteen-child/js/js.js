@@ -5,8 +5,9 @@
             $(this).css({marginLeft:0}).find("li:last").after($(this).find("li:first"));
          })
       }, 3500);
+      /************************* Change text **************************/
+      var contenu = ["Welcome", "Hi", "Sup dude"];
       
-      var contenu = 'coucou';
       setInterval(function(){
       	$("#self-def").text(contenu);
       }, 3500);
