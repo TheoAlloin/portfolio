@@ -493,7 +493,7 @@ function my_skill_page() {
 		<h2>Voici ici la liste des compétences :</h2>
 	</div>
 <?php
-	$results = $wpdb->get_results('select * from wp_competence');
+	$results = getSkills();
 	if($results){ ?>
 <div>
 		<table border='1' width='75%' class='widefat options-table' align='center'>
@@ -531,6 +531,8 @@ function getSkills(){
 }
 /*************** add cv field ******************************************/
 
+# BDD (table->wp_cv): id->int, title->varchar, date->date, file_link->varchar
+
 function add_cv_fields(){
     add_menu_page ( 'Les évenements sur le CV', 'CV', 'manage_options', 'cv_fields', 'cv_fields');
     add_submenu_page ( 'cv_fields', 'ajouter un champ sur le CV', 'ajouter un champ sur le CV', 'manage_options', 'add_new_cv_field', 'add_new_cv_field' );
@@ -544,13 +546,63 @@ function cv_fields(){
 	} 
 	?>
     <h2>Voici la liste du contenu de votre cv !</h2>
+    <?php $results = get_cv_fields(); ?>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Titre</td>
+            <td>Date</td>
+            <td>Image</td>
+        </tr>
+        <tr>
+        <?php
+        foreach ($results as &$result) { ?>
+            <td><?php echo $result['id']; ?></td>
+            <td><?php echo $result['title']; ?></td>
+            <td><?php echo $result['date']; ?></td>
+            <td><?php echo $result['file_link']; ?></td>
+        <?php } ?>
+        </tr>
+    </table>
+    
     
 <?php } 
 function add_new_cv_field(){
-	if (isset($_POST)){
-		echo "string";
-		var_dump($_POST);
-	}
+	global $wpdb;
+    if(isset($_POST) && !empty($_POST)){
+            
+        $cv_field_title = $_POST['cv_field_title'];
+        $cv_field_date = $_POST['cv_field_date'];
+        $cv_field_content = $_POST['cv_field_content'];
+        $cv_field_file = $_POST['cv_field_file'];
+        
+        $path = __DIR__ . '/uploads/';
+        $path_file = $path . basename($_FILES[$cv_field_file]['name']);
+        
+        //upload l'image
+        if (move_uploaded_file($_FILES[$cv_field_file]["tmp_name"], $path)) {
+            echo "Le fichier ". basename( $_FILES["fileToUpload"]["name"]). " a bien été uploader.";
+        } else {
+            echo "Erreur lors de l'upload.";
+        }
+        
+        //insert dans la bdd data
+        $wpdb->insert(
+            'wp_competence',
+            array(
+                'id' => $wpdb->insert_id,
+                'title' => $link,
+                'date' => $title,
+                'file_link' => $path_file
+                ),
+            array(
+                '%d',
+                '%s',
+                '%s',
+                '%s'
+                )
+            );
+    }
 	?>
     <div class="wrap">
     	<h2>Ajoutez un contenu a votre cv !</h2>
@@ -558,13 +610,20 @@ function add_new_cv_field(){
     <div class="wrap">
 	    <form action="" method="post">
 		    <table border="0">
-		    	<tr><td><input type="text" id="cv_field_title" placeholder="Titre"/></td></tr>
-		    	<tr><td><input type="date" id="cv_field_date" placeholder="Date"/></td></tr>
-		    	<tr><td><input type="textarea" id="cv_field_content" placeholder="Contenu"/></td></tr>
-		 	   	<tr><td><input type="file" id="cv_field_file" /></td></tr>
+		    	<tr><td><input type="text" id="cv_field_title" name="cv_field_title" placeholder="Titre"/></td></tr>
+		    	<tr><td><input type="date" id="cv_field_date" name="cv_field_date" placeholder="Date"/></td></tr>
+		    	<tr><td><input type="textarea" id="cv_field_content" name="cv_field_content" placeholder="Contenu"/></td></tr>
+		 	   	<tr><td><input type="file" id="cv_field_file" name="cv_field_file" /></td></tr>
 		   		<tr><td><input type="submit" /></td></tr>
 	    	</table>
 	    </form>
     </div>
 <?php
+}
+
+function get_cv_fields(){
+    global $wpdb;    
+    $sql = 'select * from wp_cv';
+    $results = $wpdb->get_results($sql);
+    return $results;
 }
