@@ -437,7 +437,7 @@ function new_skill(){
 	}
 	?>
 	<div class="wrap">
-		<h2>Ajoutez une nouvelle compétence : </h2>
+		<h2>Ajoutez une nouvelle compétence : ( cf: <a href="www.devicon.com">devicon</a>)</h2>
 	</div>
 	<div class="wrap">
 		<form method="post" action="">
@@ -527,7 +527,7 @@ function cv_fields(){
     <div id="wrap">
     <?php $results = get_cv_fields(); 
     if($results){ ?>
-        <table border="1" cellspacing="4">
+        <table border="1" cellspacing="4" class="widefat options-table">
             <tr>
                 <th>ID</th>
                 <th>Titre</th>
@@ -542,9 +542,13 @@ function cv_fields(){
                     <td><?php echo $result->date; ?></td>
                     <td><?php echo $result->file_link; ?></td>
                 <?php }
-            }else{
-                echo 'Pas de contenu trouvé pour votre CV !';
-            }?>
+            }else{?>
+
+            	<div class="alert alert-info">
+                	<p> Pas de contenu trouvé pour votre CV ! </p>
+                </div>
+
+            <?php }?>
             </tr>
         </table>
    </div>
@@ -557,29 +561,10 @@ function add_new_cv_field(){
         $cv_field_title = $_POST['cv_field_title'];
         $cv_field_date = $_POST['cv_field_date'];
         $cv_field_content = $_POST['cv_field_content'];
-        $cv_field_file = $_POST['cv_field_file'];
-        $cv_field_file = str_replace(' ', '-', $cv_field_file);
-        $path = __DIR__ . '/uploads/';
-        $name = $_FILES[$cv_field_file]['name'];
-        $tmp_name = $_FILES[$cv_field_file]['tmp_name'];
-        
-        if( isset($cv_field_file)){
-            error_reporting(E_ALL | E_STRICT);
-        }
-        var_dump($path_file = $path . basename($name));
-        
-        //upload l'image
-        if(!empty($_FILES[$cv_field_file])){
-            if (move_uploaded_file($tmp_name, $path)) {
-                echo "Le fichier ". basename( $_FILES[$cv_field_file]["name"]). " a bien été uploader.";
-            } else {
-                echo "Erreur lors de l'upload.";
-            }
-        }else{
-            echo 'file empty';
-        }    
-        
-        
+        $cv_field_file = str_replace(' ', '-', $_POST['cv_field_file']);
+        $cv_field_color = $_POST['cv_field_color'];
+        var_dump($cv_field_color);
+        exit;
         //insert dans la bdd data
         $wpdb->insert(
             'wp_cv',
@@ -587,10 +572,12 @@ function add_new_cv_field(){
                 'id' => $wpdb->insert_id,
                 'title' => $cv_field_title,
                 'date' => $cv_field_date,
-                'file_link' => $cv_field_file
+                'file_link' => $cv_field_file,
+                'cv_field_color' => $cv_field_color
                 ),
             array(
                 '%d',
+                '%s',
                 '%s',
                 '%s',
                 '%s'
@@ -599,16 +586,17 @@ function add_new_cv_field(){
     }
 	?>
     <div class="wrap">
-    	<h2>Ajoutez du contenu a votre cv !</h2>
+    	<h2>Ajoutez du contenu à votre cv !</h2>
     </div>
     <div class="wrap">
 	    <form action="" method="post">
-		    <table border="0">
+		    <table border="0" class="widefat options-table form-table">
 		    	<tr><td><input type="text" id="cv_field_title" name="cv_field_title" placeholder="Titre"/></td></tr>
 		    	<tr><td><input type="date" id="cv_field_date" name="cv_field_date" placeholder="Date"/></td></tr>
 		    	<tr><td><input type="textarea" id="cv_field_content" name="cv_field_content" placeholder="Contenu"/></td></tr>
-		 	   	<tr><td><input type="file" id="cv_field_file" name="cv_field_file" /></td></tr>
-		   		<tr><td><input type="submit" /></td></tr>
+		 	   	<tr><td><input type="text" id="cv_field_file" name="cv_field_file" placeholder="URL du Glyphon"/></td></tr>
+		 	   	<tr><td><input type="color" id="cv_field_color" name="cv_field_color" /> Ajouter un couleur de fond à votre glyphon !</td></tr>
+		   		<tr><td><input type="submit" class='button-primary autowidth' /></td></tr>
 	    	</table>
 	    </form>
     </div>
@@ -617,7 +605,7 @@ function add_new_cv_field(){
 
 function get_cv_fields(){
     global $wpdb;    
-    $sql = 'select * from wp_cv';
+    $sql = 'select * from wp_timeline';
     $results = $wpdb->get_results($sql);
     return $results;
 }

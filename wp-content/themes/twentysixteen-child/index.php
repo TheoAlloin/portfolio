@@ -95,7 +95,7 @@
     <aside class="bg-dark">
         <div class="container text-center">
             <div class="call-to-action">
-                <h2>N'hésitez pas à me contactez !</h2>
+                <h2>N'hésitez pas à me contacter !</h2>
                 <a href="#contact" class="page-scroll btn btn-default btn-xl sr-button">Contact</a>
             </div>
         </div>

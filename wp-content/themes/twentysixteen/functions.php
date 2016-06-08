@@ -129,6 +129,7 @@ function twentysixteen_setup() {
 }
 endif; // twentysixteen_setup
 add_action( 'after_setup_theme', 'twentysixteen_setup' );
+
 /**
  * Sets the content width in pixels, based on the theme's design and stylesheet.
  *
@@ -242,7 +243,6 @@ add_action( 'wp_head', 'twentysixteen_javascript_detection', 0 );
  * @since Twenty Sixteen 1.0
  */
 function twentysixteen_scripts() {
-
 	// Add custom fonts, used in the main stylesheet.
 	wp_enqueue_style( 'twentysixteen-fonts', twentysixteen_fonts_url(), array(), null );
 
@@ -266,7 +266,6 @@ function twentysixteen_scripts() {
 
 	// Load the html5 shiv.
 	wp_enqueue_script( 'twentysixteen-html5', get_template_directory_uri() . '/js/html5.js', array(), '3.7.3' );
-	wp_enqueue_script( 'twentysixteen-script', get_template_directory_uri() . '/js/mine.js', array( 'jquery' ), '20160412');
 	wp_script_add_data( 'twentysixteen-html5', 'conditional', 'lt IE 9' );
 
 	wp_enqueue_script( 'twentysixteen-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20160412', true );
@@ -280,6 +279,7 @@ function twentysixteen_scripts() {
 	}
 
 	wp_enqueue_script( 'twentysixteen-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20160412', true );
+
 	wp_localize_script( 'twentysixteen-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'twentysixteen' ),
 		'collapse' => __( 'collapse child menu', 'twentysixteen' ),
@@ -419,209 +419,3 @@ function twentysixteen_widget_tag_cloud_args( $args ) {
 	return $args;
 }
 add_filter( 'widget_tag_cloud_args', 'twentysixteen_widget_tag_cloud_args' );
-/***************************  add skill menu admin **********************************/
-function my_menu_skill(){
-    add_menu_page( 
-        'Ajout competence', 
-        'Mes compétences', 
-        'administrator', 
-        'my_skill_page', 
-        'my_skill_page'
-        );
-    add_submenu_page(
-        'my_skill_page',
-        'Ajouter une compétence',
-        'Nouvelle compétence',
-        'administrator',
-        'new_skill',
-        'new_skill'
-        );
-}
-function new_skill(){
-    global $wpdb;
-    if(isset($_POST) && !empty($_POST)){
-        $link = $_POST['link'];
-        $title = $_POST['title'];
-        $title_desc = $_POST['desc'];
-        $wpdb->insert(
-            'wp_competence',
-            array(
-                'id' => $wpdb->insert_id,
-                'link' => $link,
-                'title' => $title,
-                'skill_desc' => $title_desc
-                ),
-            array(
-                '%d',
-                '%s',
-                '%s',
-                '%s'
-                )
-            );
-    }
-    ?>
-    <div class="wrap">
-        <h2>Ajoutez une nouvelle compétence : </h2>
-    </div>
-    <div class="wrap">
-        <form method="post" action="">
-            <table cellspacing='0' class="widefat options-table">
-                <tr><td><input type='text' name="link" id="link"/> <b>Inserez le lien de l'image de la nouvelle compétence </b></td></tr>
-                <tr><td><input type='text' name="title" id="title"/> <b>Libellé de la compétence</b></td></tr>
-                <tr><td><input type='text' name='desc' id='desc' /> <b>Description de la compétence</b></td></tr>
-            </table>
-            <p type="submit">
-                <input type="submit" name='pannel_update' class='button-primary autowidth' />
-            </p>
-        </form>
-    </div>
-
-<?php
-}
-function my_skill_page() {
-    global $wpdb;
-    if ( !current_user_can( 'manage_options' ) )  {
-        wp_die( __( 'Droit inssufisants' ) );
-    } 
-    if (isset($_POST)){
-        echo "string";
-        var_dump($_POST);
-    }
-    ?>
-    <div class="wrap">
-        <h2>Voici ici la liste des compétences :</h2>
-    </div>
-<?php
-    $results = getSkills();
-    if($results){ ?>
-<div>
-        <table border='1' width='75%' class='widefat options-table' align='center'>
-            <tr>
-                <th><b>ID</b></th>
-                <th><b>Titre</b></th>
-                <th><b>Image correspondante</b></th>
-                <th><b>Description</b></th>
-            </tr>
-            <?php foreach ($results as $result) {
-                $result->link = stripslashes($result->link);?>
-                <tr>
-                    <td><?php echo $result->id; ?></td>
-                    <td><?php echo $result->title; ?></td>
-                    <td><?php echo $result->link; ?></td>
-                    <td><?php echo $result->skill_desc; ?></td>
-                </tr>
-                <?php } ?>
-        </table>
-</div>  
-    <?php
-    }else{
-        echo "Pas de compétences trouvées";
-    }?>
-
-    <br /> 
-    <p>En savoir plus : <a href="http://devicon.fr/">devicon</a></p>
-<?php   
-}
-add_action('admin_menu', 'my_menu_skill');
-
-function getSkills(){
-    global $wpdb;
-    $sql = 'select * from wp_competence';
-    $results = $wpdb->get_results($sql);
-    return $results;
-}
-/*************** add cv field ******************************************/
-# BDD (table->wp_cv): id->int, title->varchar, date->date, file_link->varchar
-function add_cv_fields(){
-    add_menu_page ( 'Les évenements sur le CV', 'CV', 'manage_options', 'cv_fields', 'cv_fields');
-    add_submenu_page ( 'cv_fields', 'ajouter un champ sur le CV', 'ajouter un champ sur le CV', 'manage_options', 'add_new_cv_field', 'add_new_cv_field' );
-}
-add_action( 'admin_menu', 'add_cv_fields' );
-function cv_fields(){
-    global $wpdb;
-    if ( !current_user_can( 'manage_options' ) )  {
-        wp_die( __( 'Droit inssufisants' ) );
-    } 
-    ?>
-    <h2>Voici la liste du contenu de votre cv !</h2>
-    <?php $results = get_cv_fields(); ?>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>Titre</td>
-            <td>Date</td>
-            <td>Image</td>
-        </tr>
-        <tr>
-        <?php
-        foreach ($results as &$result) { ?>
-            <td><?php echo $result['id']; ?></td>
-            <td><?php echo $result['title']; ?></td>
-            <td><?php echo $result['date']; ?></td>
-            <td><?php echo $result['file_link']; ?></td>
-        <?php } ?>
-        </tr>
-    </table>
-    
-    
-<?php } 
-function add_new_cv_field(){
-    global $wpdb;
-    if(isset($_POST) && !empty($_POST)){
-            
-        $cv_field_title = $_POST['cv_field_title'];
-        $cv_field_date = $_POST['cv_field_date'];
-        $cv_field_content = $_POST['cv_field_content'];
-        $cv_field_file = $_POST['cv_field_file'];
-        
-        $path = __DIR__ . '/uploads/';
-        $path_file = $path . basename($_FILES[$cv_field_file]['name']);
-        
-        //upload l'image
-        if (move_uploaded_file($_FILES[$cv_field_file]["tmp_name"], $path)) {
-            echo "Le fichier ". basename( $_FILES["fileToUpload"]["name"]). " a bien été uploader.";
-        } else {
-            echo "Erreur lors de l'upload.";
-        }
-        
-        //insert dans la bdd data
-        $wpdb->insert(
-            'wp_competence',
-            array(
-                'id' => $wpdb->insert_id,
-                'title' => $link,
-                'date' => $title,
-                'file_link' => $path_file
-                ),
-            array(
-                '%d',
-                '%s',
-                '%s',
-                '%s'
-                )
-            );
-    }
-    ?>
-    <div class="wrap">
-        <h2>Ajoutez un contenu a votre cv !</h2>
-    </div>
-    <div class="wrap">
-        <form action="" method="post">
-            <table border="0">
-                <tr><td><input type="text" id="cv_field_title" name="cv_field_title" placeholder="Titre"/></td></tr>
-                <tr><td><input type="date" id="cv_field_date" name="cv_field_date" placeholder="Date"/></td></tr>
-                <tr><td><input type="textarea" id="cv_field_content" name="cv_field_content" placeholder="Contenu"/></td></tr>
-                <tr><td><input type="file" id="cv_field_file" name="cv_field_file" /></td></tr>
-                <tr><td><input type="submit" /></td></tr>
-            </table>
-        </form>
-    </div>
-<?php
-}
-function get_cv_fields(){
-    global $wpdb;    
-    $sql = 'select * from wp_cv';
-    $results = $wpdb->get_results($sql);
-    return $results;
-}
-

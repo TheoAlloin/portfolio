@@ -452,7 +452,7 @@ html {
 }
 
 body {
-	/*background: #1a1a1a;*/
+	background: #1a1a1a;
 	/* Fallback for when there is no custom background color defined. */
 }
 
@@ -1284,7 +1284,6 @@ a:active {
 	text-decoration: none;
 	text-transform: none;
 	top: -9999em;
-	margin: 0;
 }
 
 .logged-in .site .skip-link {
@@ -2732,7 +2731,7 @@ p > video {
 	}
 
 	.site {
-		/*margin: 21px;*/
+		margin: 21px;
 	}
 
 	.site-main {
@@ -3084,13 +3083,13 @@ p > video {
 	}
 
 	.site-content {
-		/*padding: 0 4.5455%;*/
+		padding: 0 4.5455%;
 	}
 
 	.content-area {
 		float: left;
 		margin-right: -100%;
-		width: 100%;
+		width: 70%;
 	}
 
 	.entry-header,
@@ -3951,69 +3950,4 @@ p > video {
 	.widecolumn {
 		padding: 0;
 	}
-}
-
-/******************************		PERSO 						*********************************/
-
-.main-content-one{
-}
-#one{
-	background-color: #F5693B;
-}
-#content-one{
-	height: 635px;
-}
-
-#profil-one{
-	float: left;
-	text-align: center;
-}
-
-#profil-one img{
-	border-radius: 250px;
-	margin: 50px 0px 0px 100px;
-}
-
-#profil-two{
-	float: left;
-}
-
-.main-content-two{
-	background-color: #D3D3D3;
-	height: 210px;
-}
-
-#content-two{
-	margin-left: 5%;
-	background-color: #D3D3D3;
-}
-.banniere{
-	width: 100%;
-	overflow: hidden;
-	margin: 0!important;
-	height: 210px;
-
-	padding: 15px 0px;
-}
-
-.banniere li{
-	display: inline-block;
-	width: 190px;
-	margin: 0px 50px;
-	float: left;
-}
-
-
-#two {
-	background-color: red;
-}
-.separator {
-	margin-top: 0px;
-}
-
-svg {
-}
-
-#masthead {
-	display:none;
 }
