@@ -1,4 +1,20 @@
  $(function(){
+ 	
+ 	/************************ NAVBAR *********************/
+ 	$("div.navbar-fixed-top").autoHidingNavbar();
+ 	  
+ 	$("a").on('click', function(event) {
+    if (this.hash !== "") {
+	      event.preventDefault();
+	      var hash = this.hash;
+	      $('html, body').animate({
+	        scrollTop: $(hash).offset().top
+	      }, 800, function(){
+	        window.location.hash = hash;
+	      });
+	    } // End if
+  	});
+ 	
  	/****************** SLIDER ************************/
       setInterval(function(){
          $(".slideshow ul").animate({marginLeft:-350},800,function(){
@@ -7,21 +23,18 @@
       }, 3500);
       
       /************************* Change text **************************/
-      var contenu = ["Developpeur", "Certifié", "Bienvenue", "Diplomé"];
+      var contenu = ["à la recherche d'un emploi", "certifié", "spécialisé back-end", "diplômé"];
+      var max = contenu.length;
+      var i = 0;
       setInterval(function(){
-      	for(var i=0; i < contenu.length; i++){
-      		$("#self-def").text( + contenu[i] );    
-      		console.log(i);  	
-      	}
-      }, 3500);
+      		$("#self-def").text( contenu[i] );    
+      		console.log(i);
+      		if(i == max){
+      			i = -1;
+      		}
+      		i++;	
+      }, 4000);
       
-      fruits = ["Banana", "Orange", "Apple", "Mango"];
-	fLen = fruits.length;
-	text = "<ul>";
-	for (i = 0; i < fLen; i++) {
-    	text += "<li>" + fruits[i] + "</li>";
-    	console.log(text);
-	}
      /*********************Contact form **************************/
     
     $('#contact_form').bootstrapValidator({

@@ -3,6 +3,15 @@
 	overflow : hidden;
 }
 
+.custom-navbar{
+	background-color: orange!important;
+    margin: 0!important;
+    border-radius: 0!important;
+}
+
+.navbar-brand{
+	color: white!important;
+}
 .slideshow ul {
 	
    list-style: none;
@@ -32,6 +41,21 @@
 .no-decoration:active, .no-decoration:after, .no-decoration:hover{
 	text-decoration: none;
 }
+
+#self-def{
+	font-weight: bold;
+}
+
+.date_timeline {
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 35px!important;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-bottom: #777 1px solid;
+    border-top: #777 1px solid;
+}
+
 /************************************************* Timeline ******************************************/
 .add_me:hover{
 	color: #F05F40;
@@ -42,9 +66,10 @@
 }
 .timeline {
   list-style: none;
-  padding: 20px 0 20px;
+  padding: 0px 0 20px;
   position: relative;
 }
+
 .timeline:before {
   top: 0;
   bottom: 0;

@@ -1,12 +1,24 @@
 <?php get_header(); ?>
-
+    <nav class="navbar navbar-default navbar-fixed-top custom-navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#about">Portfolio</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active page-scroll"><a href="#about">Home</a></li>
+          <li class="page-scroll"><a href="#services">Compétences</a></li>
+          <li class="page-scroll"><a href="#timeline">Curriculum Vitae</a></li>
+          <li class="page-scroll"><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
     <section class="bg-primary" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Bienvenue sur mon portfolio !</h2>
                     <hr class="light">
-                    <p class="text-faded">Bonjour, je m'appelle <b>Théo Alloin</b>, je suis aujourd'hui <span id="self-def">diplomé d'une licence professionnel</span>. Pasionné de [...] depuis 2008.</p>
+                    <p class="text-faded">Bonjour, je m'appelle <b>Théo Alloin</b>, je suis <span id="self-def">développeur web</span>. Pasionné de [...] depuis 2008.</p>
                     <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">C'est parti !</a>
                 </div>
             </div>
