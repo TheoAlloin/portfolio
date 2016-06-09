@@ -107,6 +107,54 @@
         <div class="container">
             <div class="row">
                     <ul class="timeline">
+                        <?php 
+                        $i = 0;
+                        $date_tampon = 0;
+                        $results = get_cv_fields();
+
+                        foreach ( $results as $result ) {
+                            $date = $result->date;
+                            //date[0]->année
+                            //date[1]->mois
+                            //date[2]->jour
+                            $date = explode('-', $date);
+                            if ($date[0]){
+                                if($date[0] > $date_tampon) {
+                                    echo '<li class="date_timeline">' . $date[0] . '</li>';    
+                                    $date_tampon = $date[0];
+                                }
+                            }
+                            
+                            //pas de couleur predefini
+                            if(!$result->color){
+                                $result->color = '##999999';
+                            }
+                            
+                            //droite ou gauche
+                            if($i == 0){
+                                echo "<li>";                            
+                            }elseif($i == 1){
+                                echo "<li class='timeline-inverted'>";
+                                
+                            }
+                           ?>
+                              <div class="timeline-badge" style="background-color:<?php echo $result->color; ?>"><i class="timeline_glyph glyphicon <?php echo $result->glyphon ?>"></i></div>
+                              <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                  <h4 class="timeline-title"><?php echo $result->titre ?></h4>
+                                </div>
+                                <div class="timeline-body">
+                                  <p><?php echo $result->contenu ?></p>
+                                </div>
+                              </div>
+                            </li>
+                            
+                        <?php 
+                            $i++;
+                            if( $i > 1 ){
+                                $i = 0;
+                            }
+                        } ?>
                         <!--
                         <li>
                           <div class="timeline-badge"><i class="timeline_glyph glyphicon glyphicon-check"></i></div>

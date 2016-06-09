@@ -563,7 +563,7 @@ function add_new_cv_field(){
         $cv_field_content = $_POST['cv_field_content'];
         $cv_field_file = str_replace(' ', '-', $_POST['cv_field_file']);
         $cv_field_color = $_POST['cv_field_color'];
-        var_dump($cv_field_color);
+
         //insert dans la bdd data
         $wpdb->insert(
             'wp_timeline',
@@ -606,7 +606,7 @@ function add_new_cv_field(){
 
 function get_cv_fields(){
     global $wpdb;    
-    $sql = 'select * from wp_timeline';
+    $sql = 'SELECT * FROM `wp_timeline` ORDER BY date asc';
     $results = $wpdb->get_results($sql);
     return $results;
 }
