@@ -23,16 +23,21 @@ function cv_fields(){
             <tr>
                 <th>ID</th>
                 <th>Titre</th>
+                <th>Contenu</th>
                 <th>Date</th>
-                <th>Image</th>
+                <th>Glyphon</th>
+                <th>Color</th>
             </tr>
-            <tr>
             <?php
                 foreach ($results as &$result) { ?>
-                    <td><?php echo $result->id; ?></td>
-                    <td><?php echo $result->title; ?></td>
-                    <td><?php echo $result->date; ?></td>
-                    <td><?php echo $result->file_link; ?></td>
+                    <tr>
+                        <td><?php echo $result->id; ?></td>
+                        <td><?php echo $result->titre; ?></td>
+                        <td><?php echo $result->contenu; ?></td>
+                        <td><?php echo $result->date; ?></td>
+                        <td><?php echo $result->glyphon; ?></td>
+                        <td><?php echo $result->color; ?></td>
+                    </tr>
                 <?php }
             }else{?>
 
@@ -41,7 +46,6 @@ function cv_fields(){
                 </div>
 
             <?php }?>
-            </tr>
         </table>
    </div>
 <?php }
