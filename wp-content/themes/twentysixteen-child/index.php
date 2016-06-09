@@ -100,10 +100,14 @@
             </div>
         </div>
     </aside>
+    
+    <!--------------------------------------------- TIMELINE ---------------------------------------->
+    
     <section id="timeline">
         <div class="container">
             <div class="row">
                     <ul class="timeline">
+                        <!--
                         <li>
                           <div class="timeline-badge"><i class="timeline_glyph glyphicon glyphicon-check"></i></div>
                           <div class="timeline-panel">
@@ -172,6 +176,7 @@
                             </div>
                           </div>
                         </li>
+                        -->
                 </ul>
             </div>
         </div>

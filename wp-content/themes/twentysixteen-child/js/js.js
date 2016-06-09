@@ -5,12 +5,23 @@
             $(this).css({marginLeft:0}).find("li:last").after($(this).find("li:first"));
          })
       }, 3500);
-      /************************* Change text **************************/
-      var contenu = ["Welcome", "Hi", "Sup dude"];
       
+      /************************* Change text **************************/
+      var contenu = ["Developpeur", "Certifié", "Bienvenue", "Diplomé"];
       setInterval(function(){
-      	$("#self-def").text(contenu);
+      	for(var i=0; i < contenu.length; i++){
+      		$("#self-def").text( + contenu[i] );    
+      		console.log(i);  	
+      	}
       }, 3500);
+      
+      fruits = ["Banana", "Orange", "Apple", "Mango"];
+	fLen = fruits.length;
+	text = "<ul>";
+	for (i = 0; i < fLen; i++) {
+    	text += "<li>" + fruits[i] + "</li>";
+    	console.log(text);
+	}
      /*********************Contact form **************************/
     
     $('#contact_form').bootstrapValidator({

@@ -557,26 +557,27 @@ function cv_fields(){
 function add_new_cv_field(){
 	global $wpdb;
     if(isset($_POST) && !empty($_POST)){
-            
+        
         $cv_field_title = $_POST['cv_field_title'];
         $cv_field_date = $_POST['cv_field_date'];
         $cv_field_content = $_POST['cv_field_content'];
         $cv_field_file = str_replace(' ', '-', $_POST['cv_field_file']);
         $cv_field_color = $_POST['cv_field_color'];
         var_dump($cv_field_color);
-        exit;
         //insert dans la bdd data
         $wpdb->insert(
-            'wp_cv',
+            'wp_timeline',
             array(
                 'id' => $wpdb->insert_id,
-                'title' => $cv_field_title,
+                'titre' => $cv_field_title,
+                'contenu' => $cv_field_content,
                 'date' => $cv_field_date,
-                'file_link' => $cv_field_file,
-                'cv_field_color' => $cv_field_color
+                'glyphon' => $cv_field_file,
+                'color' => $cv_field_color
                 ),
             array(
                 '%d',
+                '%s',
                 '%s',
                 '%s',
                 '%s',
@@ -594,7 +595,7 @@ function add_new_cv_field(){
 		    	<tr><td><input type="text" id="cv_field_title" name="cv_field_title" placeholder="Titre"/></td></tr>
 		    	<tr><td><input type="date" id="cv_field_date" name="cv_field_date" placeholder="Date"/></td></tr>
 		    	<tr><td><input type="textarea" id="cv_field_content" name="cv_field_content" placeholder="Contenu"/></td></tr>
-		 	   	<tr><td><input type="text" id="cv_field_file" name="cv_field_file" placeholder="URL du Glyphon"/></td></tr>
+		 	   	<tr><td><input type="text" id="cv_field_file" name="cv_field_file" placeholder="shortcode Glyphon"/></td></tr>
 		 	   	<tr><td><input type="color" id="cv_field_color" name="cv_field_color" /> Ajouter un couleur de fond à votre glyphon !</td></tr>
 		   		<tr><td><input type="submit" class='button-primary autowidth' /></td></tr>
 	    	</table>
