@@ -114,6 +114,7 @@
 
                         foreach ( $results as $result ) {
                             $date = $result->date;
+                            $date_format = date_format( date_create($date) , 'd/m/Y');
                             //date[0]->année
                             //date[1]->mois
                             //date[2]->jour
@@ -125,9 +126,9 @@
                                 }
                             }
                             
-                            //pas de couleur predefini
-                            if(!$result->color){
-                                $result->color = '##999999';
+                            //pas de glyphon predefini
+                            if(!$result->glyphon){
+                                $result->glyphon = 'glyphicon-check';
                             }
                             
                             //droite ou gauche
@@ -135,13 +136,13 @@
                                 echo "<li>";                            
                             }elseif($i == 1){
                                 echo "<li class='timeline-inverted'>";
-                                
                             }
                            ?>
                               <div class="timeline-badge" style="background-color:<?php echo $result->color; ?>"><i class="timeline_glyph glyphicon <?php echo $result->glyphon ?>"></i></div>
                               <div class="timeline-panel">
                                 <div class="timeline-heading">
                                   <h4 class="timeline-title"><?php echo $result->titre ?></h4>
+                                  <?php if($result->date){ ?><p><small class="text-muted"><i class="glyphicon glyphon-default glyphicon-time"></i> <?php echo $date_format; ?></small></p><?php } ?>
                                 </div>
                                 <div class="timeline-body">
                                   <p><?php echo $result->contenu ?></p>
@@ -155,76 +156,6 @@
                                 $i = 0;
                             }
                         } ?>
-                        <!--
-                        <li>
-                          <div class="timeline-badge"><i class="timeline_glyph glyphicon glyphicon-check"></i></div>
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                              <p><small class="text-muted"><i class="glyphicon glyphon-default glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="timeline-inverted">
-                          <div class="timeline-badge warning"><i class="timeline_glyph glyphicon glyphicon-credit-card"></i></div>
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                              <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="timeline-badge danger"><i class="timeline_glyph glyphicon glyphicon-credit-card"></i></div>
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="timeline-inverted">
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="timeline-badge info"><i class="timeline_glyph glyphicon glyphicon-floppy-disk"></i></div>
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                            </div>
-                          </div>
-                        </li>
-                        
-                        <li class="timeline-inverted">
-                          <div class="timeline-badge success"><i class="timeline_glyph glyphicon-thumbs-up"></i></div>
-                          <div class="timeline-panel">
-                            <div class="timeline-heading">
-                              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                              <p>Mussum ipsum cacilds, vidis litro abertis.  .</p>
-                            </div>
-                          </div>
-                        </li>
-                        -->
                 </ul>
             </div>
         </div>
